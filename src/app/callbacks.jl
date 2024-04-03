@@ -60,9 +60,9 @@ function callback!(func::Union{Function, ClientsideFunction, String},
      output::Union{Vector{<:Output}, Output},
      input::Union{Vector{<:Input}, Input},
      state::Union{Vector{<:State}, State} = State[];
-     prevent_initial_call = nothing
+     kwargs...
      )
-     return _callback!(func, app, CallbackDeps(output, input, state), prevent_initial_call = prevent_initial_call)
+     return _callback!(func, app, CallbackDeps(output, input, state); kwargs...)
 end
 
 """
@@ -99,13 +99,13 @@ end
 function callback!(func::Union{Function, ClientsideFunction, String},
      app::DashApp,
      deps::Dependency...;
-     prevent_initial_call = nothing
+     kwargs...
      )
      output = Output[]
      input = Input[]
      state = State[]
      _process_callback_args(deps, (output, input, state))
-     return _callback!(func, app, CallbackDeps(output, input, state, length(output) > 1), prevent_initial_call = prevent_initial_call)
+     return _callback!(func, app, CallbackDeps(output, input, state, length(output) > 1); kwargs...)
 end
 
 function _process_callback_args(args::Tuple{T, Vararg}, dest::Tuple{Vector{T}, Vararg}) where {T}
@@ -124,7 +124,10 @@ function _process_callback_args(args::Tuple{}, dest::Tuple{})
 end
 
 
-function _callback!(func::Union{Function, ClientsideFunction, String}, app::DashApp, deps::CallbackDeps; prevent_initial_call)
+function _callback!(func::Union{Function, ClientsideFunction, String}, app::DashApp, deps::CallbackDeps;
+    prevent_initial_call = nothing,
+    background = false,
+    manager = nothing)
 
     check_callback(func, app, deps)
 
@@ -138,7 +141,8 @@ function _callback!(func::Union{Function, ClientsideFunction, String}, app::Dash
                 deps,
                 isnothing(prevent_initial_call) ?
                     get_setting(app, :prevent_initial_callbacks) :
-                    prevent_initial_call
+                    prevent_initial_call,
+                background
             )
         )
 end

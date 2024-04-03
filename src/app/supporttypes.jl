@@ -112,6 +112,7 @@ struct Callback
     func ::Union{Function, ClientsideFunction}
     dependencies ::CallbackDeps
     prevent_initial_call ::Bool
+    background ::Bool
 end
 
 is_multi_out(cb::Callback) = cb.dependencies.multi_out == true
