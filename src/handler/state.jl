@@ -30,7 +30,8 @@ function _dependencies_json(app::DashApp)
             state = dependency_tuple.(callback.dependencies.state),
             output = output_string(callback.dependencies),
             clientside_function = _dep_clientside_func(callback.func),
-            prevent_initial_call = callback.prevent_initial_call
+            prevent_initial_call = callback.prevent_initial_call,
+            long = callback.long && (interval = callback.interval)
         )
     end
     return JSON3.write(result)

@@ -127,6 +127,7 @@ end
 function _callback!(func::Union{Function, ClientsideFunction, String}, app::DashApp, deps::CallbackDeps;
     prevent_initial_call = nothing,
     background = false,
+    interval = 1000,
     manager = nothing)
 
     check_callback(func, app, deps)
@@ -142,7 +143,8 @@ function _callback!(func::Union{Function, ClientsideFunction, String}, app::Dash
                 isnothing(prevent_initial_call) ?
                     get_setting(app, :prevent_initial_callbacks) :
                     prevent_initial_call,
-                background
+                background,
+                interval
             )
         )
 end
