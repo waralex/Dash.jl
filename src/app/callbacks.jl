@@ -128,7 +128,13 @@ function _callback!(func::Union{Function, ClientsideFunction, String}, app::Dash
     prevent_initial_call = nothing,
     background = false,
     interval = 1000,
-    manager = nothing)
+    manager = nothing,
+    progress = nothing,
+    progress_default = nothing,
+    running = nothing,
+    cancel = nothing,
+    cache_args_to_ignore = nothing
+    )
 
     check_callback(func, app, deps)
 
