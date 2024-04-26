@@ -138,6 +138,16 @@ function _callback!(func::Union{Function, ClientsideFunction, String}, app::Dash
 
     check_callback(func, app, deps)
 
+    if background
+        long_spec = Dict(:interval => interval)
+        manager !== nothing && (long_spec[:manager] = manager)
+        progress !== nothing && (long_spec[:progress] = progress)
+        progress_default !== nothing && (long_spec[:progress_default] = progress_default)
+        running !== nothing && (long_spec[:running] = running)
+        cancel !== nothing && (long_spec[:cancel] = cancel)
+        cache_args_to_ignore !== nothing && (long_spec[:cache_args_to_ignore] = cache_args_to_ignore)
+    end
+
     out_symbol = Symbol(output_string(deps))
     haskey(app.callbacks, out_symbol) && error("Multiple callbacks can not target the same output. Offending output: $(out_symbol)")
     callback_func = make_callback_func!(app, func, deps)
@@ -149,8 +159,7 @@ function _callback!(func::Union{Function, ClientsideFunction, String}, app::Dash
                 isnothing(prevent_initial_call) ?
                     get_setting(app, :prevent_initial_callbacks) :
                     prevent_initial_call,
-                background,
-                interval
+                background ? long_spec : background
             )
         )
 end
