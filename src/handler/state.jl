@@ -21,6 +21,11 @@ mutable struct StateCache
     StateCache(app, registry) = new(_cache_tuple(app, registry)..., false)
 end
 
+abstract type BackgroundCallBackManager end
+
+mutable struct DiskcacheManager <: BackgroundCallBackManager
+end
+
 _dep_clientside_func(func::ClientsideFunction) = func
 _dep_clientside_func(func) = nothing
 function _dependencies_json(app::DashApp)
