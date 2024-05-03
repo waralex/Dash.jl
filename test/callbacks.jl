@@ -674,5 +674,5 @@ end
     request = HTTP.Request("GET", "/_dash-dependencies")
     resp = Dash.HttpHelpers.handle(handler, request)
     deps = JSON3.read(String(resp.body))
-    @test deps[1].long
+    @test deps[1].long.interval == 1000
 end
