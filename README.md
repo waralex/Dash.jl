@@ -5,6 +5,12 @@
 [![GitHub](https://img.shields.io/github/license/plotly/Dash.jl.svg?color=dark-green)](https://github.com/plotly/Dash.jl/blob/master/LICENSE)
 [![GitHub commit activity](https://img.shields.io/github/commit-activity/y/plotly/Dash.jl.svg?color=dark-green)](https://github.com/plotly/Dash.jl/graphs/contributors)
 
+<div align="center">
+  <a href="https://dash.plotly.com/project-maintenance">
+    <img src="https://dash.plotly.com/assets/images/maintained-by-community.png" width="400px" alt="Maintained by the Plotly Community">
+  </a>
+</div>
+
 #### Create beautiful, analytic applications in Julia
 
 Built on top of Plotly.js, React and HTTP.jl, [Dash](https://plotly.com/dash/) ties modern UI elements like dropdowns, sliders, and graphs directly to your analytical Julia code.
