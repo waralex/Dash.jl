@@ -4,8 +4,6 @@ import HTTP, JSON3, CodecZlib, MD5
 using Sockets
 using Pkg.Artifacts
 
-const ROOT_PATH = realpath(joinpath(@__DIR__, ".."))
-#const RESOURCE_PATH = realpath(joinpath(ROOT_PATH, "resources"))
 include("exceptions.jl")
 include("Components.jl")
 include("HttpHelpers/HttpHelpers.jl")
