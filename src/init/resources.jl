@@ -1,4 +1,8 @@
 using YAML
+using RelocatableFolders: @path
+
+# TODO move to DashCoreResources
+const FAVICON_PATH = @path joinpath(@__DIR__, "..", "favicon.ico")
 
 load_meta(name) = YAML.load_file(
             joinpath(artifact"dash_resources", "$(name).yaml")

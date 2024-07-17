@@ -1,7 +1,6 @@
+
 function process_default_favicon(request::HTTP.Request, state::HandlerState)
-    ico_contents = read(
-        joinpath(ROOT_PATH, "src", "favicon.ico")
-    )
+    ico_contents = read(FAVICON_PATH)
     return HTTP.Response(
         200,
         ["Content-Type" => "image/x-icon"],
