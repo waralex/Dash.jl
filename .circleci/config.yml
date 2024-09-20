@@ -19,7 +19,8 @@ jobs:
     steps:
       - checkout
 
-      - browser-tools/install-browser-tools
+      - browser-tools/install-browser-tools:
+         chrome-version: 120.0.6099.71
 
       - run:
           name: ℹ️  CI Context
