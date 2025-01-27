@@ -189,6 +189,7 @@ If a parameter can be set by an environment variable, that is listed as:
   Values provided here take precedence over environment variables.
 
 # Arguments
+- `app_root::String` - a path, usually the current working directory, relative to which other folders are determined. Auto detected by default.
 - `assets_folder::String` - a path, relative to the current working directory,
         for extra files to be used in the browser. Default `'assets'`. All .js and .css files will be loaded immediately unless excluded by `assets_ignore`, and other files such as images will be served if requested.
 
@@ -282,6 +283,7 @@ If a parameter can be set by an environment variable, that is listed as:
         clientside callback.
 """
 function dash(;
+        app_root = app_root_path(),
         external_stylesheets = ExternalSrcType[],
         external_scripts  = ExternalSrcType[],
         url_base_pathname = dash_env("url_base_pathname"),
@@ -327,6 +329,6 @@ function dash(;
             compress,
             update_title
         )
-        result = DashApp(app_root_path(), isinteractive(), config, index_string)
+        result = DashApp(app_root, isinteractive(), config, index_string)
     return result
 end
