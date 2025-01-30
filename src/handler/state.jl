@@ -21,6 +21,11 @@ mutable struct StateCache
     StateCache(app, registry) = new(_cache_tuple(app, registry)..., false)
 end
 
+abstract type BackgroundCallBackManager end
+
+mutable struct DiskcacheManager <: BackgroundCallBackManager
+end
+
 _dep_clientside_func(func::ClientsideFunction) = func
 _dep_clientside_func(func) = nothing
 function _dependencies_json(app::DashApp)
@@ -30,7 +35,8 @@ function _dependencies_json(app::DashApp)
             state = dependency_tuple.(callback.dependencies.state),
             output = output_string(callback.dependencies),
             clientside_function = _dep_clientside_func(callback.func),
-            prevent_initial_call = callback.prevent_initial_call
+            prevent_initial_call = callback.prevent_initial_call,
+            long = callback.long !== false && (interval = callback.long[:interval],)
         )
     end
     return JSON3.write(result)

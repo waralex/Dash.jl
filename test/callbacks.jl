@@ -657,3 +657,22 @@ end
     @test occursin("clientside[\"_dashprivate_my-div\"]", body)
     @test occursin("ns[\"children\"]", body)
 end
+
+@testset "Background callbacks" begin
+    app = dash()
+    app.layout = html_div() do 
+        html_div(html_p(id = "paragraph_id", children = ["Button not clicked"]))
+        html_button(id="buttton_id", children = "Run Job!")
+    end
+
+    callback!(app, Output("paragraph_id", "children"), Input("button_id", "n_clicks"), background = true) do clicks
+        sleep(2)
+        return string("Clicked ", clicks, " times")
+    end
+
+    handler = make_handler(app)
+    request = HTTP.Request("GET", "/_dash-dependencies")
+    resp = Dash.HttpHelpers.handle(handler, request)
+    deps = JSON3.read(String(resp.body))
+    @test deps[1].long.interval == 1000
+end
